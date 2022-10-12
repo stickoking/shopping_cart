@@ -18,13 +18,14 @@ const defaultValues: Product = {
   cart: []
 }
 const Cart = createContext<any | null>(defaultValues)
+faker.seed(99)
 
 const Context: React.FC<Props> = ({ children }): JSX.Element => {
   const products: Product[] = [...Array(20)].map(() => ({
     id: faker.datatype.uuid(),
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
-    image: faker.image.fashion(),
+    image: faker.image.image(),
     inStock: faker.helpers.arrayElement([0, 3, 5, 6, 7]),
     fastDelivery: faker.datatype.boolean(),
     ratings: faker.helpers.arrayElement([1, 2, 4, 5, 6])

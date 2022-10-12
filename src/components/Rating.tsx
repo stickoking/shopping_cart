@@ -1,14 +1,11 @@
 import React from 'react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { RatingStyle } from '../models/models'
 
 interface Props {
   rating: number
-  onClick: (i: number) => void
-  style: Style
-}
-
-interface Style {
-  cursor: string
+  onClick?: (i: number) => void
+  style?: RatingStyle
 }
 
 const Rating: React.FC<Props> = ({ rating, onClick, style }): JSX.Element => {
@@ -16,7 +13,7 @@ const Rating: React.FC<Props> = ({ rating, onClick, style }): JSX.Element => {
   return (
    <>
     {maxRating.map((_, i) => (
-      <span key={i} onClick = {() => onClick(i + 1)} style={style}>
+      <span key={i} onClick = {() => onClick !== undefined ? onClick(i + 1) : null} style={style}>
         {rating > i
           ? (
           <AiFillStar fontSize='15px'/>
