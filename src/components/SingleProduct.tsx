@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { CartState } from '../context/Context'
 import { Product } from '../models/models'
 import Rating from './Rating'
 import './styles.css'
@@ -9,6 +10,9 @@ interface Props {
 }
 
 const SingleProduct: React.FC<Props> = ({ prod }): JSX.Element => {
+  const { state: { cart }, dispatch } = CartState()
+  console.log(cart)
+  console.log(dispatch)
   return (
     <div className='products'>
       <Card>
@@ -26,6 +30,9 @@ const SingleProduct: React.FC<Props> = ({ prod }): JSX.Element => {
                 )}
               <Rating rating={prod.ratings}/>
           </Card.Subtitle>
+          {
+            cart.some((p: { id: string }) => p.id === prod.id)
+          }
           <Button variant='danger'>
                 Remove from cart
           </Button>

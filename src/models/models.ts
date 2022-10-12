@@ -1,5 +1,5 @@
 export interface ShoppingCart {
-  id: string | undefined
+  id?: string | undefined
 }
 
 export interface Product {
@@ -10,7 +10,15 @@ export interface Product {
   inStock: number
   fastDelivery: boolean
   ratings: number
-  cart?: ShoppingCart[]
+}
+
+export interface ProductState {
+  state: CartProducts
+}
+
+export interface CartProducts {
+  products: Product[]
+  cart: ShoppingCart[]
 }
 
 export interface RatingStyle {

@@ -14,8 +14,7 @@ const defaultValues: Product = {
   image: '',
   inStock: 0,
   fastDelivery: false,
-  ratings: 0,
-  cart: []
+  ratings: 0
 }
 const Cart = createContext<any | null>(defaultValues)
 faker.seed(99)
