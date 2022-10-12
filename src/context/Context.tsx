@@ -19,7 +19,7 @@ const defaultValues: Product = {
 }
 const Cart = createContext<any | null>(defaultValues)
 
-const Context: React.FC<Props> = ({ children }) => {
+const Context: React.FC<Props> = ({ children }): JSX.Element => {
   const products: Product[] = [...Array(20)].map(() => ({
     id: faker.datatype.uuid(),
     name: faker.commerce.productName(),

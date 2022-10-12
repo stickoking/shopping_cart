@@ -5,7 +5,7 @@ interface Props {
   prod: Product
 }
 
-const SingleProduct: React.FC<Props> = ({ prod }) => {
+const SingleProduct: React.FC<Props> = ({ prod }): JSX.Element => {
   console.log(prod)
   return (
     <div>

@@ -1,15 +1,16 @@
 import React, { ReactElement } from 'react'
 import { CartState } from '../context/Context'
 import { Product } from '../models/models'
+import Filters from './Filters'
 import SingleProduct from './SingleProduct'
 import './styles.css'
 
-const Home: React.FC = () => {
+const Home: React.FC = (): JSX.Element => {
   const { state: { products } } = CartState()
   // console.log(state, dispatch)
   return (
        <div className='home'>
-        {/* {<Filters/>} */}
+        {<Filters/>}
         <div className='productContainer'>
         {
           products.map((prod: Product): ReactElement => {

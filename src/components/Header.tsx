@@ -3,7 +3,7 @@ import { FaShoppingCart } from 'react-icons/fa'
 import { Container, Dropdown, FormControl, Nav, Navbar, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const Header: React.FC = () => {
+const Header: React.FC = (): JSX.Element => {
   return (
         <Navbar bg = "dark" variant= "dark" style = {{ height: 80 }}>
             <Container>
