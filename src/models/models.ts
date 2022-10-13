@@ -1,5 +1,5 @@
-export interface ShoppingCart {
-  id?: string | undefined
+export interface ShoppingCart extends Product {
+  qty: number
 }
 
 export interface Product {
@@ -12,8 +12,14 @@ export interface Product {
   ratings: number
 }
 
+export interface Dispatch {
+  type: ReducerActionType
+  payload: Product
+}
+
 export interface ProductState {
   state: CartProducts
+  dispatch?: (action: ReducerAction) => void
 }
 
 export interface CartProducts {
@@ -33,5 +39,5 @@ export enum ReducerActionType {
 
 export interface ReducerAction {
   type: ReducerActionType
-  payload?: any
+  payload: Product
 }

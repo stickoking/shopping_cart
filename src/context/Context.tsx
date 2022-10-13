@@ -1,5 +1,5 @@
-import React, { createContext, ReactNode, useContext, useReducer, useState } from 'react'
-import { Product, ShoppingCart } from '../models/models'
+import React, { createContext, ReactNode, useContext, useReducer } from 'react'
+import { Product, ProductState } from '../models/models'
 import { faker } from '@faker-js/faker'
 import { cartReducer } from './Reducer'
 
@@ -7,16 +7,30 @@ interface Props {
   children: ReactNode
 }
 
-const defaultValues: Product = {
-  id: '',
-  name: '',
-  price: '',
-  image: '',
-  inStock: 0,
-  fastDelivery: false,
-  ratings: 0
+const defaultValues: ProductState = {
+  state: {
+    products: [{
+      id: '',
+      name: '',
+      price: '',
+      image: '',
+      inStock: 0,
+      fastDelivery: false,
+      ratings: 1
+    }],
+    cart: [{
+      id: '',
+      name: '',
+      price: '',
+      image: '',
+      inStock: 0,
+      fastDelivery: false,
+      ratings: 1,
+      qty: 0
+    }]
+  }
 }
-const Cart = createContext<any | null>(defaultValues)
+const Cart = createContext<ProductState>(defaultValues)
 faker.seed(99)
 
 const Context: React.FC<Props> = ({ children }): JSX.Element => {
@@ -35,7 +49,7 @@ const Context: React.FC<Props> = ({ children }): JSX.Element => {
     cart: []
   })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [shoppingCart, setShoppingCart] = useState<ShoppingCart>(defaultValues)
+  // const [shoppingCart, setShoppingCart] = useState<ShoppingCart>(defaultValues)
   return (
     <Cart.Provider value={{ state, dispatch }}>
         {children}
@@ -45,6 +59,6 @@ const Context: React.FC<Props> = ({ children }): JSX.Element => {
 
 export default Context
 
-export const CartState = (): any => {
+export const CartState = (): ProductState => {
   return useContext(Cart)
 }

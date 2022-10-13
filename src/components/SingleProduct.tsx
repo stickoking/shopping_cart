@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { CartState } from '../context/Context'
-import { Product } from '../models/models'
+import { Product, ReducerActionType } from '../models/models'
 import Rating from './Rating'
 import './styles.css'
 
@@ -12,7 +12,6 @@ interface Props {
 const SingleProduct: React.FC<Props> = ({ prod }): JSX.Element => {
   const { state: { cart }, dispatch } = CartState()
   console.log(cart)
-  console.log(dispatch)
   return (
     <div className='products'>
       <Card>
@@ -32,11 +31,25 @@ const SingleProduct: React.FC<Props> = ({ prod }): JSX.Element => {
           </Card.Subtitle>
           {
             cart.some((p: { id: string }) => p.id === prod.id)
-          }
-          <Button variant='danger'>
+              ? (
+              <Button
+              variant='danger'
+              onClick={() => {
+                if (dispatch !== undefined) { dispatch({ type: ReducerActionType.REMOVE_FROM_CART, payload: prod }) }
+              }}
+              >
                 Remove from cart
-          </Button>
-          <Button disabled={prod.inStock === 0}>{prod.inStock > 0 ? 'Add to cart' : 'Out of stock'}</Button>
+              </Button>
+                )
+              : (
+              <Button disabled={prod.inStock === 0}
+                onClick={() => {
+                  if (dispatch !== undefined) { dispatch({ type: ReducerActionType.ADD_TO_CART, payload: prod }) }
+                }}
+              >{prod.inStock > 0 ? 'Add to cart' : 'Out of stock'}</Button>
+                )
+          }
+
         </Card.Body>
       </Card>
     </div>
