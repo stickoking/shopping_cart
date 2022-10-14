@@ -9,15 +9,14 @@ const Home: React.FC = (): JSX.Element => {
   const { state: { products } } = CartState()
   const { filterState } = FiltersState()
   const transformProducts = (): Product[] => {
-    let sortedProducts = products
+    let sortedProducts: Product[] = products
     sortedProducts = sortedProducts.sort((a, b) => (
       filterState.sort === SortType.LOW_TO_HIGH ? Number(a.price) - Number(b.price) : Number(b.price) - Number(a.price)
     ))
     sortedProducts = !filterState.byStock ? sortedProducts.filter(p => p.inStock > 0) : sortedProducts
     sortedProducts = filterState.byFastDelivery ? sortedProducts.filter(p => p.fastDelivery) : sortedProducts
-    if (filterState.byRating > 0) {
-      sortedProducts = sortedProducts.filter(p => p.ratings === filterState.byRating)
-    }
+    sortedProducts = filterState.byRating > 0 ? sortedProducts.filter(p => p.ratings === filterState.byRating) : sortedProducts
+
     return sortedProducts
   }
   return (
