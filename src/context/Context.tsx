@@ -1,36 +1,40 @@
 import React, { createContext, ReactNode, useContext, useReducer } from 'react'
-import { Product, ProductState } from '../models/models'
+import { Product, ProductState, FilterState, SortType } from '../models/models'
 import { faker } from '@faker-js/faker'
-import { cartReducer } from './Reducer'
+import { cartReducer, filterReducer } from './Reducer'
 
 interface Props {
   children: ReactNode
 }
 
+const defaultProd: Product = {
+  id: '',
+  name: '',
+  price: '',
+  image: '',
+  inStock: 0,
+  fastDelivery: false,
+  ratings: 1
+}
+
+const defaultFilter: FilterState = {
+  filterState: {
+    byStock: false,
+    byFastDelivery: false,
+    byRating: 0,
+    searchQuery: '',
+    sort: SortType.LOW_TO_HIGH
+  }
+}
+
 const defaultValues: ProductState = {
   state: {
-    products: [{
-      id: '',
-      name: '',
-      price: '',
-      image: '',
-      inStock: 0,
-      fastDelivery: false,
-      ratings: 1
-    }],
-    cart: [{
-      id: '',
-      name: '',
-      price: '',
-      image: '',
-      inStock: 0,
-      fastDelivery: false,
-      ratings: 1,
-      qty: 0
-    }]
+    products: [defaultProd],
+    cart: [defaultProd]
   }
 }
 const Cart = createContext<ProductState>(defaultValues)
+const Filters = createContext<FilterState>(defaultFilter)
 faker.seed(99)
 
 const Context: React.FC<Props> = ({ children }): JSX.Element => {
@@ -48,11 +52,19 @@ const Context: React.FC<Props> = ({ children }): JSX.Element => {
     products,
     cart: []
   })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [shoppingCart, setShoppingCart] = useState<ShoppingCart>(defaultValues)
+
+  const [filterState, filterDispatch] = useReducer(filterReducer, {
+    byStock: false,
+    byFastDelivery: false,
+    byRating: 0,
+    searchQuery: '',
+    sort: SortType.LOW_TO_HIGH
+  })
   return (
     <Cart.Provider value={{ state, dispatch }}>
+      <Filters.Provider value={{ filterState, filterDispatch }}>
         {children}
+      </Filters.Provider>
     </Cart.Provider>
   )
 }
@@ -61,4 +73,8 @@ export default Context
 
 export const CartState = (): ProductState => {
   return useContext(Cart)
+}
+
+export const FiltersState = (): FilterState => {
+  return useContext(Filters)
 }

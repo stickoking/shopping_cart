@@ -2,12 +2,13 @@ import React from 'react'
 import { FaShoppingCart } from 'react-icons/fa'
 import { Container, Dropdown, FormControl, Nav, Navbar, Badge, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { CartState } from '../context/Context'
+import { CartState, FiltersState } from '../context/Context'
 import { AiFillDelete } from 'react-icons/ai'
 import { ReducerActionType } from '../models/models'
 
 const Header: React.FC = (): JSX.Element => {
   const { state: { cart }, dispatch } = CartState()
+  const { filterDispatch } = FiltersState()
   return (
         <Navbar bg = "dark" variant= "dark" style = {{ height: 80 }}>
             <Container>
@@ -19,6 +20,11 @@ const Header: React.FC = (): JSX.Element => {
                         style={{ width: 500 }}
                         placeholder='Search a product'
                         className='m-auto'
+                        onChange={(e) => {
+                          if (filterDispatch !== undefined) {
+                            filterDispatch({ type: ReducerActionType.FILTER_BY_SEARCH, payload: e.target.value })
+                          }
+                        }}
                     />
                 </Navbar.Text>
                 <Nav>

@@ -9,7 +9,7 @@ const Cart: React.FC = (): JSX.Element => {
   const { state: { cart }, dispatch } = CartState()
   const [total, setTotal] = useState<number>(0)
   useEffect(() => {
-    setTotal(cart.reduce((acc, curr) => acc + Number(curr.price), 0))
+    setTotal(cart.reduce((acc, curr) => acc + (Number(curr.price) * Number(curr.qty)), 0))
   }, [cart])
   return (
         <div className='home'>
@@ -28,7 +28,18 @@ const Cart: React.FC = (): JSX.Element => {
                         <Rating rating={prod.ratings}/>
                       </Col>
                       <Col md={2}>
-                        <Form.Control as='select' value={prod.qty}>
+                        <Form.Control
+                          as='select'
+                          value={prod.qty}
+                          onChange={(e) => {
+                            if (dispatch !== undefined) {
+                              dispatch({
+                                type: ReducerActionType.EDIT_CART,
+                                payload: { ...prod, qty: Number(e.target.value) }
+                              })
+                            }
+                          }}
+                        >
                           {[...Array(prod.inStock).keys()].map((x) => (
                             <option key={x + 1}>{x + 1}</option>
                           ))}
