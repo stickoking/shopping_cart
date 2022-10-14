@@ -74,7 +74,7 @@ const Filters: React.FC = (): JSX.Element => {
       </span>
       <span>
         <label style={{ paddingRight: 10 }}>Rating: </label>
-        <Rating rating = {filterState.byRating} onClick={(i: number) => { if (filterDispatch !== undefined) { filterDispatch({ type: ReducerActionType.FILTER_BY_RATING, payload: i + 1 }) } }} style = {{ cursor: 'pointer' }}/>
+        <Rating rating = {filterState.byRating} onClick={(i: number) => { if (filterDispatch !== undefined) { filterDispatch({ type: ReducerActionType.FILTER_BY_RATING, payload: filterState.byRating !== i ? i++ : 0 }) } }} style = {{ cursor: 'pointer' }}/>
       </span>
       <Button variant='light' onClick={() => { if (filterDispatch !== undefined) { filterDispatch({ type: ReducerActionType.CLEAR_FILTERS }) } }}>Clear Filters</Button>
     </div>
