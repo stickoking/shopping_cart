@@ -5,7 +5,7 @@ import Cart from './components/Cart'
 import Header from './components/Header'
 import Home from './components/Home'
 
-const App: React.FC = () => {
+const App: React.FC = (): JSX.Element => {
   return (
       <Router>
        <Header/>
