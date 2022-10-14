@@ -16,7 +16,7 @@ const Home: React.FC = (): JSX.Element => {
     sortedProducts = !filterState.byStock ? sortedProducts.filter(p => p.inStock > 0) : sortedProducts
     sortedProducts = filterState.byFastDelivery ? sortedProducts.filter(p => p.fastDelivery) : sortedProducts
     sortedProducts = filterState.byRating > 0 ? sortedProducts.filter(p => p.ratings === filterState.byRating) : sortedProducts
-
+    sortedProducts = filterState.searchQuery.length > 0 ? sortedProducts.filter(p => p.name.toLowerCase().includes(filterState.searchQuery.toLowerCase())) : sortedProducts
     return sortedProducts
   }
   return (
